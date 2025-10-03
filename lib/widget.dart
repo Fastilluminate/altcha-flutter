@@ -137,7 +137,7 @@ class AltchaWidgetState extends State<AltchaWidget> {
 
   Future<String?> _getTimezone() async {
     try {
-      return FlutterTimezone.getLocalTimezone();
+      return FlutterTimezone.getLocalTimezone().toString();
     } catch (e) {
       _log('Could not get time zone: $e');
     }
