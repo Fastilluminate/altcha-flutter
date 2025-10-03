@@ -135,9 +135,9 @@ class AltchaWidgetState extends State<AltchaWidget> {
     return widget.verifyUrl;
   }
 
-  Future<String?> _getTimezone() async {
+  Future<TimezoneInfo?> _getTimezone() async {
     try {
-      return FlutterTimezone.getLocalTimezone().toString();
+      return FlutterTimezone.getLocalTimezone();
     } catch (e) {
       _log('Could not get time zone: $e');
     }
@@ -244,7 +244,9 @@ class AltchaWidgetState extends State<AltchaWidget> {
       final body = jsonEncode({
         'code': code,
         'payload': payload,
-        'timeZone': _sentinelTimeZone ? await _getTimezone() : null,
+        'timeZone': _sentinelTimeZone
+            ? (await _getTimezone())?.identifier
+            : null,
       });
       final headers = {'Content-Type': 'application/json'};
       final response = await http.post(uri, body: body, headers: headers);
